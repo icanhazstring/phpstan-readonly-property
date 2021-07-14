@@ -1,0 +1,8 @@
+services:
+    -
+        class: Icanhazstring\PhpstanReadonlyPropertyExtension\Rule\WritingToReadonlyAttributePropertiesRule
+        arguments:
+            checkThisOnly: %checkThisOnly%
+        tags:
+            - phpstan.rules.rule
+

@@ -1,0 +1,35 @@
+{
+  "name": "icanhazstring/phpstan-readonly-property",
+  "type": "library",
+  "description": "Support #[Readonly] promoted constructor properties for PHPStan",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andreas Frömer",
+      "email": "andreas.froemer@check24.de"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "phpstan/phpstan": "^0.12.55"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Icanhazstring\\PhpstanReadonlyPropertyExtension\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Icanhazstring\\PhpstanReadonlyPropertyExtension\\Test\\": "tests/"
+    },
+    "classmap": [
+      "tests/data"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
