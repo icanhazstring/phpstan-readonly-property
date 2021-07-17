@@ -6,7 +6,7 @@ keyword will be introduced.
 ## Installation
 
 ```bash
-$ composer require --dev icanhazstring/phpstan-readonly-property
+composer require --dev icanhazstring/phpstan-readonly-property
 ```
 
 Add `vendor/icanhazstring/phpstan-readonly-property/rules.neon` into your `phpstan.neon` configuration.
