@@ -31,5 +31,12 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "extra": {
+    "phpstan": {
+      "includes": [
+        "rules.neon"
+      ]
+    }
   }
 }
