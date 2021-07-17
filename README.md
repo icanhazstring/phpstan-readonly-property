@@ -9,7 +9,13 @@ keyword will be introduced.
 composer require --dev icanhazstring/phpstan-readonly-property
 ```
 
-Add `vendor/icanhazstring/phpstan-readonly-property/rules.neon` into your `phpstan.neon` configuration.
+Then use PHPStan Extension Installer using
+
+```bash
+composer require --dev phpstan/extension-installer
+```
+
+or manually add `vendor/icanhazstring/phpstan-readonly-property/rules.neon` into your `phpstan.neon` configuration.
 
 ```neon
 # phpstan.neon
