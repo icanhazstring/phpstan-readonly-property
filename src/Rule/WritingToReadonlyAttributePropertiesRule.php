@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Icanhazstring\PhpstanReadonlyPropertyExtension\Rule;
 
+use Error;
 use Icanhazstring\PhpstanReadonlyPropertyExtension\Attribute\Readonly;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
@@ -75,7 +76,14 @@ final class WritingToReadonlyAttributePropertiesRule implements Rule
 
         $nativeDeclaringClass = $propertyReflection->getDeclaringClass()->getNativeReflection();
         $nativeProperty = $nativeDeclaringClass->getProperty($propertyReflection->getName());
-        $nativePropertyAttributes = $nativeProperty->getAttributes();
+
+        try {
+            $nativePropertyAttributes = $nativeProperty->getAttributes();
+        } catch (Error $internalError) {
+            // This will throw an internal error when no attributes are given
+            // Just ignore it
+            return [];
+        }
 
         $hasReadonlyAttribute = false;
 

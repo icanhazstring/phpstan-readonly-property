@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [0.1.2] - 2021-07-19
+### Fixed
+- Fixed an issue with BetterReflection throwing an internal error when checking on properties without attributes
+
 ## [0.1.1] - 2021-07-17
 ### Added
 - Added support for `phpstan/extension-installer` (thanks to [@simPod](https://github.com/simPod) - [#3](https://github.com/icanhazstring/phpstan-readonly-property/pull/3))

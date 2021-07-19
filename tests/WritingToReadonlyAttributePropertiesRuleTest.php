@@ -50,4 +50,12 @@ final class WritingToReadonlyAttributePropertiesRuleTest extends RuleTestCase
             ]
         );
     }
+
+    public function testNonAttributeClass(): void
+    {
+        $this->analyse(
+            [__DIR__ . '/data/NonAttributeClass.php'],
+            []
+        );
+    }
 }
