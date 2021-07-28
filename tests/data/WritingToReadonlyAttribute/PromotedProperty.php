@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data;
+namespace Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data\WritingToReadonlyAttribute;
 
 use Icanhazstring\PhpstanReadonlyPropertyExtension\Attribute\Readonly;
 
-final class WritingToReadonlyAttributePromotedProperty
+final class PromotedProperty
 {
     public function __construct(
         #[Readonly] public string $name
@@ -15,5 +15,5 @@ final class WritingToReadonlyAttributePromotedProperty
     }
 }
 
-$test = new WritingToReadonlyAttributePromotedProperty('fu');
+$test = new PromotedProperty('fu');
 $test->name = 'bar';

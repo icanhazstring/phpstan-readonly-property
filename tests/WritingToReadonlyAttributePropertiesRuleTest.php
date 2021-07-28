@@ -28,10 +28,10 @@ final class WritingToReadonlyAttributePropertiesRuleTest extends RuleTestCase
     public function testPromotedProperties(): void
     {
         $this->analyse(
-            [__DIR__ . '/data/WritingToReadonlyAttributePromotedProperty.php'],
+            [__DIR__ . '/data/WritingToReadonlyAttribute/PromotedProperty.php'],
             [
                 [
-                    'Property Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data\WritingToReadonlyAttributePromotedProperty::$name is declared as readonly and can not be written.',
+                    'Property Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data\WritingToReadonlyAttribute\PromotedProperty::$name is declared as readonly and can not be written.',
                     19,
                 ],
             ]
@@ -41,10 +41,10 @@ final class WritingToReadonlyAttributePropertiesRuleTest extends RuleTestCase
     public function testClassProperties(): void
     {
         $this->analyse(
-            [__DIR__ . '/data/WritingToReadonlyAttributeClassProperty.php'],
+            [__DIR__.'/data/WritingToReadonlyAttribute/ClassProperty.php'],
             [
                 [
-                    'Property Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data\WritingToReadonlyAttributeClassProperty::$name is declared as readonly and can not be written.',
+                    'Property Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data\WritingToReadonlyAttribute\ClassProperty::$name is declared as readonly and can not be written.',
                     21,
                 ],
             ]
@@ -54,8 +54,21 @@ final class WritingToReadonlyAttributePropertiesRuleTest extends RuleTestCase
     public function testNonAttributeClass(): void
     {
         $this->analyse(
-            [__DIR__ . '/data/NonAttributeClass.php'],
+            [__DIR__ . '/data/WritingToReadonlyAttribute/NonAttributeClass.php'],
             []
+        );
+    }
+
+    public function testSetterAccess(): void
+    {
+        $this->analyse(
+            [__DIR__.'/data/WritingToReadonlyAttribute/ThroughSetter.php'],
+            [
+                [
+                    'Property Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data\WritingToReadonlyAttribute\ThroughSetter::$value is declared as readonly and can only be written once in declaring class.',
+                    21
+                ]
+            ]
         );
     }
 }

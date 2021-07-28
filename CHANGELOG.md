@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [0.1.3] - 2021-07-28
+### Added
+- Added the possibility to not only write `Readonly` properties from the constructor
+- Added a check that prevents a declaring class from having two write access lines to a `Readonly` property
+
 ## [0.1.2] - 2021-07-19
 ### Fixed
 - Fixed an issue with BetterReflection throwing an internal error when checking on properties without attributes

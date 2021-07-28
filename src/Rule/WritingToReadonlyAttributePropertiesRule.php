@@ -14,6 +14,7 @@ use PhpParser\Node\Expr\AssignRef;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticPropertyFetch;
 use PHPStan\Analyser\Scope;
+use PHPStan\Rules\Properties\FoundPropertyReflection;
 use PHPStan\Rules\Properties\PropertyDescriptor;
 use PHPStan\Rules\Properties\PropertyReflectionFinder;
 use PHPStan\Rules\Rule;
@@ -27,6 +28,8 @@ use function sprintf;
  */
 final class WritingToReadonlyAttributePropertiesRule implements Rule
 {
+    private static $initialized = [];
+
     private PropertyDescriptor $propertyDescriptor;
     private PropertyReflectionFinder $propertyReflectionFinder;
     private RuleLevelHelper $ruleLevelHelper;
@@ -70,8 +73,9 @@ final class WritingToReadonlyAttributePropertiesRule implements Rule
             return [];
         }
 
-        if ($propertyReflection->getScope()->getFunctionName() === '__construct') {
-            return [];
+        if (!$propertyReflection->isWritable()) {
+            $propertyDescription = $this->propertyDescriptor->describeProperty($propertyReflection, $propertyFetch);
+            return [RuleErrorBuilder::message(sprintf('%s is not writable.', $propertyDescription))->build()];
         }
 
         $nativeDeclaringClass = $propertyReflection->getDeclaringClass()->getNativeReflection();
@@ -80,6 +84,7 @@ final class WritingToReadonlyAttributePropertiesRule implements Rule
         try {
             $nativePropertyAttributes = $nativeProperty->getAttributes();
         } catch (Error $internalError) {
+            $this->initialize($propertyReflection);
             // This will throw an internal error when no attributes are given
             // Just ignore it
             return [];
@@ -94,16 +99,50 @@ final class WritingToReadonlyAttributePropertiesRule implements Rule
             }
         }
 
-        if (!$propertyReflection->isWritable()) {
-            $propertyDescription = $this->propertyDescriptor->describeProperty($propertyReflection, $propertyFetch);
-            return [RuleErrorBuilder::message(sprintf('%s is not writable.', $propertyDescription))->build()];
+        if (!$hasReadonlyAttribute) {
+            $this->initialize($propertyReflection);
+            return [];
         }
 
-        if ($hasReadonlyAttribute) {
+        $scopeClass = $scope->getClassReflection()?->getName();
+        $propertyDeclaringClass = $propertyReflection->getDeclaringClass()->getName();
+
+        $isInitialized = $this->isInitialized($propertyReflection);
+        $isInDeclaringScope = $scopeClass === $propertyDeclaringClass;
+
+        if (!$isInDeclaringScope) {
             $propertyDescription = $this->propertyDescriptor->describeProperty($propertyReflection, $propertyFetch);
             return [RuleErrorBuilder::message(sprintf('%s is declared as readonly and can not be written.', $propertyDescription))->build()];
         }
 
+        if ($isInDeclaringScope && $isInitialized) {
+            $propertyDescription = $this->propertyDescriptor->describeProperty($propertyReflection, $propertyFetch);
+            return [RuleErrorBuilder::message(sprintf('%s is declared as readonly and can only be written once in declaring class.', $propertyDescription))->build()];
+        }
+
+        $this->initialize($propertyReflection);
         return [];
+    }
+
+    private function isInitialized(FoundPropertyReflection $propertyReflection): bool
+    {
+        $name = sprintf(
+            '%s::$%s',
+            $propertyReflection->getDeclaringClass()->getName(),
+            $propertyReflection->getName()
+        );
+
+        return self::$initialized[$name] ?? false;
+    }
+
+    private function initialize(FoundPropertyReflection $propertyReflection): void
+    {
+        $name = sprintf(
+            '%s::$%s',
+            $propertyReflection->getDeclaringClass()->getName(),
+            $propertyReflection->getName()
+        );
+
+        self::$initialized[$name] = true;
     }
 }
