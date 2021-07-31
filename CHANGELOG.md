@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [0.1.4] - 2021-07-31
+### Fixed
+- Fix issue with generic data containers accessing properties which are not specifically defined
+
 ## [0.1.3] - 2021-07-28
 ### Added
 - Added the possibility to not only write `Readonly` properties from the constructor

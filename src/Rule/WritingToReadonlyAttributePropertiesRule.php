@@ -79,6 +79,10 @@ final class WritingToReadonlyAttributePropertiesRule implements Rule
         }
 
         $nativeDeclaringClass = $propertyReflection->getDeclaringClass()->getNativeReflection();
+        if (!$nativeDeclaringClass->hasProperty($propertyReflection->getName())) {
+            return [];
+        }
+
         $nativeProperty = $nativeDeclaringClass->getProperty($propertyReflection->getName());
 
         try {

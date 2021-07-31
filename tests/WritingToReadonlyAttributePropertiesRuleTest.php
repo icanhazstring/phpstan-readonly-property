@@ -71,4 +71,13 @@ final class WritingToReadonlyAttributePropertiesRuleTest extends RuleTestCase
             ]
         );
     }
+
+    public function testGenericStdClass(): void
+    {
+        $this->analyse(
+            [__DIR__.'/data/WritingToReadonlyAttribute/GenericStdClassAccess.php'],
+            [
+            ]
+        );
+    }
 }
