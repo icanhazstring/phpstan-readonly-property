@@ -1,5 +1,5 @@
 # icanhazstring/phpstan-readonly-property
-Support `#[Readonly]` class properties for PHPStan.
+Support `#[IsReadonly]` class properties for PHPStan.
 This library is used to have a transition from PHP 8.0 to 8.1 until `readonly`
 keyword will be introduced.
 
@@ -25,7 +25,7 @@ includes:
 ```
 
 ## Usage
-Add `#[Readonly]` to the property you want to have readonly only.
+Add `#[IsReadonly]` to the property you want to have readonly only.
 
 ```php
 <?php
@@ -33,7 +33,7 @@ Add `#[Readonly]` to the property you want to have readonly only.
 final class User
 {
     public function __constrct(
-        #[Readonly] public string $name
+        #[IsReadonly] public string $name
     ) {}
 }
 
@@ -45,7 +45,7 @@ $user->name = 'bar'; // Will fail
 There are some limitations to the static analysis from using 8.1 `readonly` flag.
 
 ### Use of multiple setters can't be checked
-If you are initializing your `#[Readonly]` property using a setter, PHPStan can NOT detect
+If you are initializing your `#[IsReadonly]` property using a setter, PHPStan can NOT detect
 multiple calls of that setter to a readonly property.
 
 ```
