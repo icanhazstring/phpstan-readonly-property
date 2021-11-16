@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - TBD
 ### Added
 ### Changed
+
+- Renamed `Readonly` to `IsReadonly` in order to allow BC
+
 ### Deprecated
 ### Removed
 ### Fixed

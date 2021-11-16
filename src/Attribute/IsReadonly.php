@@ -7,6 +7,6 @@ namespace Icanhazstring\PhpstanReadonlyPropertyExtension\Attribute;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class Readonly
+final class IsReadonly
 {
 }

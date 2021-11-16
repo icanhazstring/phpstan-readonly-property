@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Icanhazstring\PhpstanReadonlyPropertyExtension\Test\data\WritingToReadonlyAttribute;
 
-use Icanhazstring\PhpstanReadonlyPropertyExtension\Attribute\Readonly;
+use Icanhazstring\PhpstanReadonlyPropertyExtension\Attribute\IsReadonly;
 
 final class ThroughSetter
 {
-    #[Readonly]
+    #[IsReadonly]
     public string $value;
 
     public function setValue(string $value): void
