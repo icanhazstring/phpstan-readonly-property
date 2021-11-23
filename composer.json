@@ -1,7 +1,7 @@
 {
   "name": "icanhazstring/phpstan-readonly-property",
   "type": "library",
-  "description": "Support #[Readonly] promoted constructor properties for PHPStan",
+  "description": "Support #[IsReadonly] promoted constructor properties for PHPStan",
   "license": "MIT",
   "authors": [
     {
