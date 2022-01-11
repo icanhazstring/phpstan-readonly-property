@@ -51,7 +51,7 @@ multiple calls of that setter to a readonly property.
 ```
 final class Fu
 {
-    #[Readonly]
+    #[IsReadonly]
     public string $value;
 
     public function setValue(string $value)
